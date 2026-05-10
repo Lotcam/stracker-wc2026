@@ -2,19 +2,30 @@
 #include <string.h>
 #include "sticker.h"
 
+const char *status_names[] = {"MISSING", "HAVE", "DUPLICATE"};
+
 Sticker *sticker_find(Sticker stickers[], int size, char code[]) {
-    printf("here\n");
-    for (int i = 0; i < 10 ; i++) {
+    for (int i = 0; i < MAX_STICKERS ; i++) {
         //printf("sticker code: %s\n code: %s\n", stickers[i].code, code);
         if (strcmp(stickers[i].code, code) == 0) {
-            printf("Sticker found! \n\t Name: %s\n\t Code: %s\n\t Quantity: %d\n", 
-                    stickers[i].name, stickers[i].code, stickers[i].quantity);
+            printf("Sticker %s: \n\t Name: %s\n\t Team: %s\n\t Status: %s\n\t Quantity: %d\n", 
+                    stickers[i].code, stickers[i].name, stickers[i].team_code, status_names[stickers[i].status], stickers[i].quantity);
+            return &stickers[i];
         }
     }
+    printf("error: sticker with code %s does not exist\n", code);
     return NULL;
 }
 
-const Sticker CATALOG[MAX_STICKERS] = {
+
+//void sticker_add(Sticker stickers[], int *count, char code[]) {
+//    Sticker *sticker = sticker_find(stickers, &count, code);
+//    if (stickers != NULL) {
+//        stickers[i].quantity++;
+//    }
+//}
+
+Sticker CATALOG[MAX_STICKERS] = {
     { MISSING, 0, "PNI01", "PNI", "Panini Logo" },
     { MISSING, 0, "FWC01", "FWC", "Official Emblem1" },
     { MISSING, 0, "FWC02", "FWC", "Official Emblem2" },

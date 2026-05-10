@@ -9,12 +9,14 @@ typedef enum {
 	DUPLICATE = 2
 } Status;
 
+const char *status_names[];
+
 typedef struct {
 	Status status;
 	int quantity;
 	char code[6];
-	char team_code[3];
-	char *name;
+	char team_code[4];
+	char name[64];
 } Sticker;
 
 Sticker *sticker_find(Sticker stickers[], int count, char code[]);
@@ -23,6 +25,6 @@ void sticker_list(Sticker stickers[], int count);
 void sticker_missing(Sticker stickers[], int count);
 void sticker_duplicates(Sticker stickers[], int count);
 
-extern const Sticker CATALOG[MAX_STICKERS];
+extern Sticker CATALOG[MAX_STICKERS];
 
 #endif

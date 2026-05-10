@@ -20,7 +20,7 @@ typedef struct {
 } Sticker;
 
 Sticker *sticker_find(Sticker stickers[], int count, char code[]);
-void sticker_add(Sticker stickers[], int *count, int id);
+void sticker_add(Sticker stickers[], int *count, char code[]);
 void sticker_list(Sticker stickers[], int count);
 void sticker_missing(Sticker stickers[], int count);
 void sticker_duplicates(Sticker stickers[], int count);

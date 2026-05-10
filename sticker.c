@@ -18,12 +18,12 @@ Sticker *sticker_find(Sticker stickers[], int size, char code[]) {
 }
 
 
-//void sticker_add(Sticker stickers[], int *count, char code[]) {
-//    Sticker *sticker = sticker_find(stickers, &count, code);
-//    if (stickers != NULL) {
-//        stickers[i].quantity++;
-//    }
-//}
+void sticker_add(Sticker stickers[], int *count, char code[]) {
+    Sticker *sticker = sticker_find(stickers, *count, code);
+    if (sticker != NULL) {
+        sticker->quantity++;
+    }
+}
 
 Sticker CATALOG[MAX_STICKERS] = {
     { MISSING, 0, "PNI01", "PNI", "Panini Logo" },

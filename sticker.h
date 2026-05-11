@@ -21,9 +21,8 @@ typedef struct {
 
 Sticker *sticker_find(Sticker stickers[], int count, char code[]);
 void sticker_add(Sticker stickers[], int *count, char code[]);
-void sticker_list(Sticker stickers[], int count);
-void sticker_missing(Sticker stickers[], int count);
-void sticker_duplicates(Sticker stickers[], int count);
+void sticker_remove(Sticker stickers[], int *count, char code[]);
+void sticker_list(Sticker stickers[], int *count, int argc, char *argv[]);
 
 extern Sticker CATALOG[MAX_STICKERS];
 

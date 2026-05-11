@@ -8,7 +8,7 @@ Sticker *sticker_find(Sticker stickers[], int size, char code[]) {
     for (int i = 0; i < MAX_STICKERS ; i++) {
         //printf("sticker code: %s\n code: %s\n", stickers[i].code, code);
         if (strcmp(stickers[i].code, code) == 0) {
-            printf("Sticker %s: \n\t Name: %s\n\t Team: %s\n\t Status: %s\n\t Quantity: %d\n", 
+            printf("Sticker %s: \n\t Name: %s\n\t Team: %s\n\t Status: %s\n\t Quantity: %d\n\n", 
                     stickers[i].code, stickers[i].name, stickers[i].team_code, status_names[stickers[i].status], stickers[i].quantity);
             return &stickers[i];
         }
@@ -17,12 +17,75 @@ Sticker *sticker_find(Sticker stickers[], int size, char code[]) {
     return NULL;
 }
 
+void update_sticker_status(Sticker *sticker) {
+    switch(sticker->quantity) {
+        case 0:
+            sticker->status = MISSING;
+            break;
+        case 1:
+            sticker->status = HAVE;
+            break;
+        default:
+            sticker->status = DUPLICATE;
+    }
+}
+
 
 void sticker_add(Sticker stickers[], int *count, char code[]) {
     Sticker *sticker = sticker_find(stickers, *count, code);
     if (sticker != NULL) {
         sticker->quantity++;
+        update_sticker_status(sticker);
     }
+}
+
+void sticker_remove(Sticker stickers[], int *count, char code[]) {
+    Sticker *sticker = sticker_find(stickers, *count, code);
+    if (sticker != NULL) {
+        sticker->quantity--;
+        update_sticker_status(sticker);
+    }
+}
+
+void sticker_list(Sticker stickers[], int *count, int argc, char *argv[]) {
+    if (argc < 3) {
+        return;
+    }
+
+    else {
+        int status;
+        //TODO: make so that is 'm', 'h', or 'd' or partial type of the command e.g. 'dup' also works
+        if (strcmp(argv[2], "missing") == 0) {
+            status = 0;
+        }
+        else if (strcmp(argv[2], "have") == 0) {
+            status = 1;
+        }
+        else if (strcmp(argv[2], "duplicate") == 0) {
+            status = 2;
+        }
+
+        if (argc < 4) {
+            for (int i = 0; i < MAX_STICKERS ; i++) {
+                if (stickers[i].status == status) {
+                    printf("Sticker %s: \n\t Name: %s\n\t Team: %s\n\t Status: %s\n\t Quantity: %d\n\n", 
+                            stickers[i].code, stickers[i].name, stickers[i].team_code, status_names[stickers[i].status], stickers[i].quantity);
+                    // add to sticker array to return
+                }
+            }
+        } 
+        else {
+            for (int i = 0; i < MAX_STICKERS ; i++) {
+                if (stickers[i].status == status && strcmp(stickers[i].team_code, argv[3]) == 0) {
+                    printf("Sticker %s: \n\t Name: %s\n\t Team: %s\n\t Status: %s\n\t Quantity: %d\n\n", 
+                            stickers[i].code, stickers[i].name, stickers[i].team_code, status_names[stickers[i].status], stickers[i].quantity);
+                    // add to sticker array to return
+                }
+            }
+        }
+
+    }
+
 }
 
 Sticker CATALOG[MAX_STICKERS] = {

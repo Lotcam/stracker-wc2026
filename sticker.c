@@ -39,6 +39,8 @@ void sticker_add(Sticker stickers[], int *count, char code[]) {
     if (sticker != NULL) {
         sticker->quantity++;
         update_sticker_status(sticker);
+        printf("Successfully added sticker!\n\n");
+        sticker_print(sticker);
     }
 }
 
@@ -48,6 +50,8 @@ void sticker_remove(Sticker stickers[], int *count, char code[]) {
         if (sticker->quantity > 0) {
             sticker->quantity--;
             update_sticker_status(sticker);
+            printf("Successfully removed sticker!\n\n");
+            sticker_print(sticker);
         }
     }
 }
@@ -73,18 +77,14 @@ void sticker_list(Sticker stickers[], int *count, int argc, char *argv[]) {
         if (argc < 4) {
             for (int i = 0; i < MAX_STICKERS ; i++) {
                 if (stickers[i].status == status) {
-                    printf("Sticker %s: \n\t Name: %s\n\t Team: %s\n\t Status: %s\n\t Quantity: %d\n\n", 
-                            stickers[i].code, stickers[i].name, stickers[i].team_code, status_names[stickers[i].status], stickers[i].quantity);
-                    // add to sticker array to return
+                    sticker_print(&stickers[i]);
                 }
             }
         } 
         else {
             for (int i = 0; i < MAX_STICKERS ; i++) {
                 if (stickers[i].status == status && strcmp(stickers[i].team_code, argv[3]) == 0) {
-                    printf("Sticker %s: \n\t Name: %s\n\t Team: %s\n\t Status: %s\n\t Quantity: %d\n\n", 
-                            stickers[i].code, stickers[i].name, stickers[i].team_code, status_names[stickers[i].status], stickers[i].quantity);
-                    // add to sticker array to return
+                    sticker_print(&stickers[i]);
                 }
             }
         }

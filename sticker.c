@@ -4,12 +4,15 @@
 
 const char *status_names[] = {"MISSING", "HAVE", "DUPLICATE"};
 
+void sticker_print(Sticker *sticker) {
+        printf("Sticker %s: \n\t Name: %s\n\t Team: %s\n\t Status: %s\n\t Quantity: %d\n\n", 
+                sticker->code, sticker->name, sticker->team_code, status_names[sticker->status], sticker->quantity);
+}
+
 Sticker *sticker_find(Sticker stickers[], int size, char code[]) {
     for (int i = 0; i < MAX_STICKERS ; i++) {
         //printf("sticker code: %s\n code: %s\n", stickers[i].code, code);
         if (strcmp(stickers[i].code, code) == 0) {
-            printf("Sticker %s: \n\t Name: %s\n\t Team: %s\n\t Status: %s\n\t Quantity: %d\n\n", 
-                    stickers[i].code, stickers[i].name, stickers[i].team_code, status_names[stickers[i].status], stickers[i].quantity);
             return &stickers[i];
         }
     }
@@ -42,8 +45,10 @@ void sticker_add(Sticker stickers[], int *count, char code[]) {
 void sticker_remove(Sticker stickers[], int *count, char code[]) {
     Sticker *sticker = sticker_find(stickers, *count, code);
     if (sticker != NULL) {
-        sticker->quantity--;
-        update_sticker_status(sticker);
+        if (sticker->quantity > 0) {
+            sticker->quantity--;
+            update_sticker_status(sticker);
+        }
     }
 }
 

@@ -93,7 +93,7 @@ void sticker_list(Sticker stickers[], int *count, int argc, char *argv[], char m
             }
             if (status !=2) {
                 printf("You have %d / %d total stickers\n", count, MAX_STICKERS);
-                printf("Your album is %d%% complete\n\n", (count / MAX_STICKERS) * 100);
+                printf("Your album is %.1f%% complete\n\n", ((float)count / MAX_STICKERS) * 100.0f);
 
             }
         } 

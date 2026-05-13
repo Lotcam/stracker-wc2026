@@ -11,7 +11,6 @@ This tracker does not aim to be the most practical, but rather an open-source ex
 - Make (optional, if using Makefile)
 - Unix-like environment recommended (Linux / macOS)
 - Windows supported if compiled via MinGW or WSL
-- Standard C libraries (`stdio.h`, `string.h`, `stdlib.h`)
 
 ---
 

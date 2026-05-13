@@ -84,6 +84,7 @@ void sticker_list(Sticker stickers[], int *count, int argc, char *argv[], char m
             for (int i = 0; i < MAX_STICKERS ; i++) {
                 if (stickers[i].status == status) {
                     sticker_print(&stickers[i], message);
+                    strcpy(message, "");
                     count++;
                 }
             }
@@ -100,6 +101,7 @@ void sticker_list(Sticker stickers[], int *count, int argc, char *argv[], char m
             for (int i = 0; i < MAX_STICKERS ; i++) {
                 if (stickers[i].status == status && strcmp(stickers[i].team_code, argv[3]) == 0) {
                     sticker_print(&stickers[i], message);
+                    strcpy(message, "");
                 }
             }
         }

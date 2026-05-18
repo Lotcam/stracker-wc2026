@@ -42,7 +42,7 @@ void album_interactive(Sticker stickers[], int count, char team_code[], char mes
 
             sprintf(full_code, "%s%02d", team_code, atoi(number));
 
-            sticker_remove(stickers, &count, full_code, message);
+            sticker_remove(stickers, full_code, message);
         }
         else {
             char number[8];
@@ -52,7 +52,7 @@ void album_interactive(Sticker stickers[], int count, char team_code[], char mes
 
             sprintf(full_code, "%s%02d", team_code, atoi(number));
 
-            sticker_add(stickers, &count, full_code, message);
+            sticker_add(stickers, full_code, message);
         }
 
         save_db("storage.dat", stickers, count);
@@ -76,12 +76,12 @@ int main(int argc, char *argv[]) {
         }
         else if (strcmp(argv[1], "add") == 0) {
             if (argc < 3) return 0;
-            sticker_add(stickers, &count, argv[2], message);
+            sticker_add(stickers, argv[2], message);
             save_db("storage.dat", stickers, count);
         }
         else if (strcmp(argv[1], "remove") == 0) {
             if (argc < 3) return 0;
-            sticker_remove(stickers, &count, argv[2], message);
+            sticker_remove(stickers, argv[2], message);
             save_db("storage.dat", stickers, count);
         }
         else if (strcmp(argv[1], "album") == 0) {

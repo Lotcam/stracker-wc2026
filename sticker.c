@@ -50,7 +50,7 @@ void update_sticker_status(Sticker *sticker) {
 }
 
 
-void sticker_add(Sticker stickers[], int *count, char code[], char message[]) {
+void sticker_add(Sticker stickers[], char code[], char message[]) {
     Sticker *sticker = sticker_find(stickers, code, message);
     if (sticker != NULL) {
         sticker->quantity++;
@@ -61,7 +61,7 @@ void sticker_add(Sticker stickers[], int *count, char code[], char message[]) {
     }
 }
 
-void sticker_remove(Sticker stickers[], int *count, char code[], char message[]) {
+void sticker_remove(Sticker stickers[], char code[], char message[]) {
     Sticker *sticker = sticker_find(stickers, code, message);
     if (sticker != NULL) {
         if (sticker->quantity > 0) {
@@ -127,7 +127,7 @@ void sticker_list(Sticker stickers[], int argc, char *argv[], char message[]) {
                 if (!match) continue;
             }
 
-            if (stickers[i].status == status) {
+            if (stickers[i].status == (Status)status) {
                 sticker_print(&stickers[i], message, oneline);
                 strcpy(message, "");
                 found++;

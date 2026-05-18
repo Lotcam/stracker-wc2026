@@ -1,14 +1,21 @@
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 #include "sticker.h"
 
 const char *status_names[] = {"MISSING", "HAVE", "DUPLICATE"};
 
-void sticker_print(Sticker *sticker, char message[]) {
+void sticker_print(Sticker *sticker, char message[], int oneline) {
+    if (oneline) {
+        printf("%s\n", sticker->code);
+        sprintf(message + strlen(message), "%s\n", sticker->code);
+    }
+    else {
         printf("Sticker %s: \n\t Name: %s\n\t Team: %s\n\t Status: %s\n\t Quantity: %d\n\n", 
                 sticker->code, sticker->name, sticker->team_code, status_names[sticker->status], sticker->quantity);
         sprintf(message + strlen(message), "Sticker %s: \n\t Name: %s\n\t Team: %s\n\t Status: %s\n\t Quantity: %d\n\n", 
                 sticker->code, sticker->name, sticker->team_code, status_names[sticker->status], sticker->quantity);
+    }
 }
 
 Sticker *sticker_find(Sticker stickers[], int size, char code[], char message[]) {
@@ -44,7 +51,7 @@ void sticker_add(Sticker stickers[], int *count, char code[], char message[]) {
         update_sticker_status(sticker);
         printf("Successfully added sticker!\n\n");
         sprintf(message, "Successfully added sticker!\n\n");
-        sticker_print(sticker, message);
+        sticker_print(sticker, message, 0);
     }
 }
 
@@ -56,27 +63,27 @@ void sticker_remove(Sticker stickers[], int *count, char code[], char message[])
             update_sticker_status(sticker);
             printf("Successfully removed sticker!\n\n");
             sprintf(message, "Successfully removed sticker!\n\n");
-            sticker_print(sticker, message);
+            sticker_print(sticker, message, 0);
         }
     }
 }
 
 void sticker_list(Sticker stickers[], int *count, int argc, char *argv[], char message[]) {
-    if (argc < 3) {
-        return;
-    }
+    if (argc < 3) return;
 
     else {
-        int status;
-        //TODO: make so that is 'm', 'h', or 'd' or partial type of the command e.g. 'dup' also works
-        if (strcmp(argv[2], "missing") == 0) {
+        int status = -1;
+        if (strcmp(argv[2], "missing") == 0 || strcmp(argv[2], "m") == 0) {
             status = MISSING;
         }
-        else if (strcmp(argv[2], "have") == 0) {
+        else if (strcmp(argv[2], "have") == 0 || strcmp(argv[2], "h") == 0) {
             status = HAVE;
         }
-        else if (strcmp(argv[2], "duplicate") == 0) {
+        else if (strcmp(argv[2], "duplicate") == 0 || strcmp(argv[2], "d") == 0) {
             status = DUPLICATE;
+        }
+        if (status == -1) {
+            printf("error: Unknown status %s, please try missing/m, have/h or duplicate/d\n", argv[2]);
         }
 
         if (argc < 4) {

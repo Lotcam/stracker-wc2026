@@ -67,11 +67,28 @@ int main(int argc, char *argv[]) {
         save_db("storage.dat", CATALOG, count);
         stickers = load_db("storage.dat", &count);
     }
-    if (argc < 2) {
+    if (argc < 2 || strcmp(argv[1], "help") == 0) {
+        printf("\nStracker WC2026 - Sticker Album CLI\n");
+        printf("Usage: ./stracker <command> [options]\n\n");
+        printf("Commands:\n");
+        printf("  help                Show this help message\n");
+        printf("  list [status] [...] List stickers by status (missing/m, have/h, duplicate/d) and optional teams\n");
+        printf("  add <CODE>          Add a sticker by code (e.g., MEX01)\n");
+        printf("  remove <CODE>       Remove a sticker by code\n");
+        printf("  album <TEAM_CODE>   Interactive album view for a team\n");
+        printf("\nExamples:\n");
+        printf("  ./stracker list missing mex arg\n");
+        printf("  ./stracker add MEX01\n");
+        printf("  ./stracker album MEX\n");
         return 0;
     }
     else {
         if (strcmp(argv[1], "list") == 0) {
+            if (argc < 3) {
+                printf("Please specify a status (missing/m, have/h, duplicate/d).\n");
+                printf("Example: ./stracker list h\n");
+                return 0;
+            }
             sticker_list(stickers, argc, argv, message);
         }
         else if (strcmp(argv[1], "add") == 0) {
@@ -86,9 +103,15 @@ int main(int argc, char *argv[]) {
         }
         else if (strcmp(argv[1], "album") == 0) {
             if (argc < 3) {
+                printf("Please specify a team code.\n");
+                printf("Example: ./stracker album MEX\n");
                 return 0;
             }
             album_interactive(stickers, count, argv[2], message);
+        }
+        else {
+            printf("Unknown command: %s\n\n", argv[1]);
+            printf("Use './stracker help' to see available commands.\n");
         }
     }
 

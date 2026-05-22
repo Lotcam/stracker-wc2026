@@ -37,7 +37,7 @@ make
 ## Usage
 ### List stickers
 ```bash
-./stracker list [missing/have/duplicates] (optional)[country e.g. "mex" "arg" ...] (optional)[--oneline]
+./stracker list [missing|have|duplicate] (optional)[TEAM e.g. "mex" "arg" ...] (optional)[--oneline]
 ./stracker list d mex arg --oneline
 ./stracker list d
 ```
@@ -56,3 +56,12 @@ make
 ```
 
 ![img alt](https://i.imgur.com/z2wAHnE.png)
+
+### Compare collections with a friend
+To find out which stickers you can trade with someone, share your `storage.dat` files and run:
+```bash
+./stracker compare storage.dat friend_storage.dat
+```
+This will show two lists:
+- **They can give you** — stickers you're missing that they already have
+- **You can give them** — your duplicates that they're still missing

@@ -4,6 +4,14 @@
 #include "sticker.h"
 #include <unistd.h>
 
+#ifdef _WIN32
+    #include <windows.h>
+    #define SLEEP_MS(ms) Sleep(ms)
+#else
+    #include <unistd.h>
+    #define SLEEP_MS(ms) usleep((ms) * 1000)
+#endif
+
 const char *status_names[] = {"MISSING", "HAVE", "DUPLICATE"};
 static char current_team[4] = "NAN";
 
@@ -181,12 +189,12 @@ void animate_complete(char team_code[]) {
         printf("  ★ ★ ★  %s PAGE COMPLETE!  ★ ★ ★\n", team_code);
         printf("\033[0m");
         fflush(stdout);
-        usleep(300000);  // 300ms on
+        SLEEP_MS(300);
 
         // erase the line
         printf("\033[1A\033[2K");
         fflush(stdout);
-        usleep(200000);  // 200ms off
+        SLEEP_MS(200);
     }
 
     // final persistent message

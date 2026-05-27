@@ -110,7 +110,11 @@ int main(int argc, char *argv[]) {
                 fprintf(stderr, "usage: stracker remove <CODE>\n");
                 return 1;
             }
-            sticker_remove(stickers, argv[2], message);
+            int a = sticker_remove(stickers, argv[2], message);
+            if (a != 0) {
+                fprintf(stderr, "error: missing sticker %s, can't remove\n", argv[2]);
+                return 1;
+            }
             save_db("storage.dat", stickers, count);
         }
         else if (strcmp(argv[1], "album") == 0) {

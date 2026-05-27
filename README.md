@@ -71,3 +71,8 @@ To find out which stickers you can trade with someone, share your `storage.dat` 
 This will show two lists:
 - **They can give you** — stickers you're missing that they already have
 - **You can give them** — your duplicates that they're still missing
+
+### Trade stickers
+```bash
+./stracker trade your_sticker their_sticker
+```

@@ -16,10 +16,32 @@
 const char *status_names[] = {"MISSING", "HAVE", "DUPLICATE"};
 static char current_team[4] = "NAN";
 
+
+static const char *team_flag(const char *code) {
+    static const struct { const char *code; const char *flag; } flags[] = {
+        {"ALG", "🇩🇿"}, {"ARG", "🇦🇷"}, {"AUS", "🇦🇺"}, {"AUT", "🇦🇹"},
+        {"BEL", "🇧🇪"}, {"BIH", "🇧🇦"}, {"BRA", "🇧🇷"}, {"CAN", "🇨🇦"},
+        {"CIV", "🇨🇮"}, {"COD", "🇨🇩"}, {"COL", "🇨🇴"}, {"CPV", "🇨🇻"},
+        {"CRO", "🇭🇷"}, {"CUW", "🇨🇼"}, {"CZE", "🇨🇿"}, {"ECU", "🇪🇨"},
+        {"EGY", "🇪🇬"}, {"ENG", "🏴󠁧󠁢󠁥󠁮󠁧󠁿"}, {"ESP", "🇪🇸"}, {"FRA", "🇫🇷"},
+        {"FWC", "🌍"}, {"GER", "🇩🇪"}, {"GHA", "🇬🇭"}, {"HAI", "🇭🇹"},
+        {"IRN", "🇮🇷"}, {"IRQ", "🇮🇶"}, {"JOR", "🇯🇴"}, {"JPN", "🇯🇵"},
+        {"KOR", "🇰🇷"}, {"KSA", "🇸🇦"}, {"MAR", "🇲🇦"}, {"MEX", "🇲🇽"},
+        {"NED", "🇳🇱"}, {"NOR", "🇳🇴"}, {"NZL", "🇳🇿"}, {"PAN", "🇵🇦"},
+        {"PAR", "🇵🇾"}, {"PNI", "🏆"}, {"POR", "🇵🇹"}, {"QAT", "🇶🇦"},
+        {"RSA", "🇿🇦"}, {"SCO", "🏴󠁧󠁢󠁳󠁣󠁯󠁿"}, {"SEN", "🇸🇳"}, {"SUI", "🇨🇭"},
+        {"SWE", "🇸🇪"}, {"TUN", "🇹🇳"}, {"TUR", "🇹🇷"}, {"URU", "🇺🇾"},
+        {"USA", "🇺🇸"}, {"UZB", "🇺🇿"},
+    };
+    for (size_t i = 0; i < sizeof(flags) / sizeof(flags[0]); i++)
+        if (strcmp(flags[i].code, code) == 0) return flags[i].flag;
+    return "";
+}
+
 void sticker_print(Sticker *sticker, char message[], int oneline) {
     if (oneline) {
         if (strcmp(current_team, sticker->team_code) != 0) {
-            printf("\n%s: ", sticker->team_code);
+            printf("\n%s %s: ", sticker->team_code, team_flag(sticker->team_code));
             sprintf(current_team, "%s", sticker->team_code);
             strncpy(current_team, sticker->team_code, 3);
         }

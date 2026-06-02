@@ -5,9 +5,26 @@
 #include "sticker.h"
 #include "storage.h"
 
+#define TEAM_COUNT_ORDER 49
+
+static const char *TEAM_ORDER[] = {
+    "FWC", "MEX", "RSA", "KOR", "CZE", "CAN", "BIH", "QAT", "SUI",
+    "BRA", "MAR", "HAI", "SCO", "USA", "PAR", "AUS", "TUR", "GER",
+    "CUW", "CIV", "ECU", "NED", "JPN", "SWE", "TUN", "BEL", "EGY",
+    "IRN", "NZL", "ESP", "CPV", "KSA", "URU", "FRA", "SEN", "IRQ",
+    "NOR", "ARG", "ALG", "AUT", "JOR", "POR", "COD", "UZB", "COL",
+    "ENG", "CRO", "GHA", "PAN"
+};
+
+static int find_team_index(const char *team_code) {
+    for (int i = 0; i < TEAM_COUNT_ORDER; i++)
+        if (strcmp(TEAM_ORDER[i], team_code) == 0) return i;
+    return 0;
+}
 void album_interactive(Sticker stickers[], int count, char team_code[], char message[], const char *data_file) {
 
     char input[32];
+    int idx = find_team_index(team_code);
 
     while (1) {
 
@@ -22,6 +39,8 @@ void album_interactive(Sticker stickers[], int count, char team_code[], char mes
         printf("\nCommands:\n");
         printf("CODE   -> add sticker\n");
         printf("-CODE  -> remove sticker\n");
+        printf("n      -> next page\n");
+        printf("p      -> previous page\n");
         printf("q      -> quit\n\n");
 
         printf("> ");
@@ -33,6 +52,14 @@ void album_interactive(Sticker stickers[], int count, char team_code[], char mes
 
         if (strcmp(input, "q") == 0) {
             break;
+        }
+        else if (strcmp(input, "n") == 0) {
+            idx = (idx + 1) % TEAM_COUNT_ORDER;
+            strcpy(team_code, TEAM_ORDER[idx]);
+        }
+        else if (strcmp(input, "p") == 0) {
+            idx = (idx - 1 + TEAM_COUNT_ORDER) % TEAM_COUNT_ORDER;
+            strcpy(team_code, TEAM_ORDER[idx]);
         }
         else if (input[0] == '-') {
 

@@ -4,6 +4,7 @@
 #include <ctype.h>
 #include "sticker.h"
 #include "storage.h"
+#include "sc_convert.h"
 
 #define TEAM_COUNT_ORDER 49
 
@@ -238,6 +239,24 @@ int main(int argc, char *argv[]) {
             sticker_add(stickers, argv[3], message);
             printf("\nSuccessful trade\n%s ------> %s\n", argv[2], argv[3]);
             save_db(data_file, stickers, count);
+        }
+        else if (strcmp(argv[1], "convert") == 0) {
+            if (argc < 4) {
+                return 1;
+                //TODO: add error
+            }
+
+            int dup_flag = 1;
+            if (strcmp(argv[2], "m") == 0 || strcmp(argv[2], "missing") == 0) {dup_flag = 0;}
+
+            printf("Starting sticker list conversion for file %s\n", argv[3]);
+
+            int result = convert_stickers(argv[3], dup_flag);
+
+            if (result != 0) {
+                fprintf(stderr, "error: failed to process file %s.\n", argv[3]);
+                return 1;
+            }
         }
         else {
             fprintf(stderr, "error: unknown command '%s'\n", argv[1]);

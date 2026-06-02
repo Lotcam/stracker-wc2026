@@ -72,7 +72,15 @@ This will show two lists:
 - **They can give you** — stickers you're missing that they already have
 - **You can give them** — your duplicates that they're still missing
 
-### Trade stickers
+### Custom data file
+By default, stracker reads and writes `storage.dat` in the current directory. Use `-d` or `--data` to specify a different file:
+```bash
+./stracker -d mydata.dat list missing
+./stracker --data mydata.dat add MEX01
+```
+If the specified file does not exist, it will be created and initialized with the full catalog.
+
+
 ```bash
 ./stracker trade your_sticker their_sticker
 ```

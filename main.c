@@ -118,6 +118,7 @@ int main(int argc, char *argv[]) {
         printf("  remove <CODE>\n");
         printf("  album <TEAM>\n");
         printf("  compare <your_db> <their_db>\n");
+        printf("  convert <d|duplicate> <m|missing> <path/to/file.txt>\n");
         printf("  help\n\n");
         printf("Examples:\n");
         printf("  ./stracker list missing\n");
@@ -125,6 +126,7 @@ int main(int argc, char *argv[]) {
         printf("  ./stracker add MEX01\n");
         printf("  ./stracker album MEX\n");
         printf("  ./stracker compare my.dat friend.dat\n");
+        printf("  ./stracker convert duplicate ~/Documents/FriendDuplicates.txt\n");
         return 0;
     }
     else {
@@ -242,12 +244,18 @@ int main(int argc, char *argv[]) {
         }
         else if (strcmp(argv[1], "convert") == 0) {
             if (argc < 4) {
+                fprintf(stderr, "error: missing arguments\n");
+                fprintf(stderr, "usage: ./stracker convert <d|duplicate> <m|missing> <path/to/file.txt>\n");
                 return 1;
-                //TODO: add error
             }
 
-            int dup_flag = 1;
-            if (strcmp(argv[2], "m") == 0 || strcmp(argv[2], "missing") == 0) {dup_flag = 0;}
+            int dup_flag;
+            if (strcmp(argv[2], "m") == 0 || strcmp(argv[2], "missing") == 0) dup_flag = 0;
+            else if (strcmp(argv[2], "d") == 0 || strcmp(argv[2], "duplicate") == 0) dup_flag = 1;
+            else {
+                fprintf(stderr, "error: invalid argument '%s'\n", argv[2]);
+                fprintf(stderr, "usage: ./stracker convert <d|duplicate> <m|missing> <path/to/file.txt>\n");
+            }
 
             printf("Starting sticker list conversion for file %s\n", argv[3]);
 

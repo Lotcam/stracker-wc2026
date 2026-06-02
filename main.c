@@ -249,7 +249,7 @@ int main(int argc, char *argv[]) {
                 return 1;
             }
 
-            int dup_flag;
+            int dup_flag = 0;
             if (strcmp(argv[2], "m") == 0 || strcmp(argv[2], "missing") == 0) dup_flag = 0;
             else if (strcmp(argv[2], "d") == 0 || strcmp(argv[2], "duplicate") == 0) dup_flag = 1;
             else {

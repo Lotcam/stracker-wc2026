@@ -84,3 +84,12 @@ If the specified file does not exist, it will be created and initialized with th
 ```bash
 ./stracker trade your_sticker their_sticker
 ```
+
+### Convert Sticker Collector list to .dat data file
+The `convert` command allows you to ingest a standard text list of missing stickers provided by a trading partner and automatically generate the CLI commands needed to add all of their owned stickers (the inverse) into a .dat storage file.
+
+```bash
+./stracker convert <d|duplicate> <m|missing> <path/to/file.txt>
+```
+
+Note: This command only outputs the generated commands to your terminal text stream; it does not execute them or modify your database directly. To actually run the commands and update a data file, you need to redirect the output to a .sh file and execute it.

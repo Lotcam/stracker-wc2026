@@ -71,6 +71,12 @@ Sticker *sticker_find(Sticker stickers[], char code[], char message[]) {
         }
     }
 
+    if (strcmp(code, "00") == 0){
+        printf("error: for the logo sticker '00' please use code 'PNI01'\n");
+        sprintf(message, "error: for the logo sticker '00' please use code 'PNI01'\n");
+        return NULL;
+    }
+
     printf("error: sticker with code %s does not exist\n", code);
     sprintf(message, "error: sticker with code %s does not exist\n", code);
     return NULL;

@@ -183,7 +183,8 @@ void sticker_list(Sticker stickers[], int argc, char *argv[], char message[]) {
                 if (!match) continue;
             }
 
-            if (stickers[i].status == (Status)status) {
+            if (stickers[i].status == (Status)status ||
+                (status == HAVE && stickers[i].status == DUPLICATE)) {
                 sticker_print(&stickers[i], message, oneline);
                 strcpy(message, "");
                 found++;
